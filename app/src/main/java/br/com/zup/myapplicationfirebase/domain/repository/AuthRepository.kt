@@ -1,4 +1,4 @@
-package br.com.zup.myapplicationfirebase.domain.model
+package br.com.zup.myapplicationfirebase.domain.repository
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult

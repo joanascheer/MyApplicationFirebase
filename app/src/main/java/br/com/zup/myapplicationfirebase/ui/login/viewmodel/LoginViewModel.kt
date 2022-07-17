@@ -3,7 +3,7 @@ package br.com.zup.myapplicationfirebase.ui.login.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.zup.myapplicationfirebase.domain.model.AuthRepository
+import br.com.zup.myapplicationfirebase.domain.repository.AuthRepository
 import br.com.zup.myapplicationfirebase.domain.model.User
 import br.com.zup.myapplicationfirebase.utils.EMAIL_ERROR_MESSAGE
 import br.com.zup.myapplicationfirebase.utils.LOGIN_ERROR_MESSAGE

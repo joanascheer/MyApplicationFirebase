@@ -3,15 +3,12 @@ package br.com.zup.myapplicationfirebase.ui.main.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import br.com.zup.myapplicationfirebase.R
-import br.com.zup.myapplicationfirebase.databinding.ActivityLoginBinding
+import br.com.zup.myapplicationfirebase.data.datasource.model.Phrase
 import br.com.zup.myapplicationfirebase.databinding.ActivityMainBinding
+import br.com.zup.myapplicationfirebase.ui.phrases.view.PhrasesActivity
 import br.com.zup.myapplicationfirebase.ui.login.view.LoginActivity
 import br.com.zup.myapplicationfirebase.ui.main.viewmodel.MainViewModel
 
@@ -32,7 +29,21 @@ class MainActivity : AppCompatActivity() {
         binding.tvLogout.setOnClickListener {
             logOut()
         }
+
+        binding.BtnSeeMessages.setOnClickListener {
+            gotToPhrases()
+        }
+
+        binding.btnSaveMessage.setOnClickListener {
+            viewModel.savePhrase()
+            gotToPhrases()
+        }
     }
+
+    private fun gotToPhrases() {
+        startActivity(Intent(this, PhrasesActivity::class.java))
+    }
+
 
     private fun getData() {
         val name = viewModel.getName()
@@ -40,17 +51,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logOut() {
-            viewModel.logout()
-            this.finish()
-            goToLogin()
-            true
+        viewModel.logout()
+        this.finish()
+        goToLogin()
+        true
     }
 
     private fun initObserver() {
 
-        viewModel.errorMessage.observe(this) {
+        viewModel.message.observe(this) {
             loadErrorMessage(it)
         }
+
+viewModel.phraseResponse.observe(this) {
+
+}
+
+    }
+
+    private fun loadPhrase(phrase: Phrase) {
+
     }
 
     private fun loadErrorMessage(message: String) {
