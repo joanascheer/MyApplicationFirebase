@@ -3,30 +3,35 @@ package br.com.zup.myapplicationfirebase.ui.phrases.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.zup.myapplicationfirebase.data.datasource.model.Phrase
+import br.com.zup.myapplicationfirebase.domain.model.User
+import br.com.zup.myapplicationfirebase.domain.repository.AuthRepository
 import br.com.zup.myapplicationfirebase.domain.repository.PhrasesRepository
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 class PhrasesViewModel : ViewModel() {
     private val phrasesRepository = PhrasesRepository()
+    private val authRepository = AuthRepository()
 
-    private var _phrasesListState = MutableLiveData<List<kotlin.String>>()
-    val phrasesState: LiveData<List<kotlin.String>> = _phrasesListState
+    private var _phrasesListState = MutableLiveData<List<Phrase>>()
+    val phrasesState: LiveData<List<Phrase>> = _phrasesListState
 
-    private var _messageState = MutableLiveData<kotlin.String>()
-    val messageState: LiveData<kotlin.String> = _messageState
+    private var _messageState = MutableLiveData<String>()
+    val messageState: LiveData<String> = _messageState
 
     fun getList() {
         phrasesRepository.getPhrasesList()
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    val phrasesList = mutableListOf<kotlin.String>()
+                    val phrasesList = mutableListOf<Phrase>()
 
                     for (resultSnapshot in snapshot.children) {
-                        val saveResponse = resultSnapshot.getValue(String::class.java)
-                        saveResponse?.let { phrasesList.add(it.toString()) }
+                        val saveResponse = resultSnapshot.getValue(Phrase::class.java)
+                        saveResponse?.let { phrasesList.add(it) }
                     }
                     _phrasesListState.value = phrasesList
                 }
@@ -36,6 +41,8 @@ class PhrasesViewModel : ViewModel() {
                 }
             })
     }
+
+    fun getCurrentUser() = authRepository.getCurrentUser()
 
 
 

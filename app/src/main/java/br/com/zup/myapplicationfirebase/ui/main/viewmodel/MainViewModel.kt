@@ -27,9 +27,9 @@ class MainViewModel : ViewModel() {
     fun logout() = authRepository.logout()
 
     fun savePhrase() {
-
+        val phrase = _phraseResponse.value?.phrase.toString()
         val phrasePath = getPhrasePath()
-        phrasesRepository.databaseReference().child("$phrasePath").setValue(phrasePath) {
+        phrasesRepository.databaseReference().child(phrasePath).setValue(phrase) {
                 error, _ ->
             if (error != null) {
                 _message.value = error.message
@@ -40,8 +40,8 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun getPhrasePath(): String? {
-        return _phraseResponse.value?.phrase
+    private fun getPhrasePath(): String {
+        return _phraseResponse.value?.phrase.toString()
 //        val uri: Uri = Uri.parse(phrase)
 //        return uri.lastPathSegment?.replace(".jpg", "")
     }

@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSaveMessage.setOnClickListener {
             viewModel.savePhrase()
-            gotToPhrases()
         }
     }
 
@@ -62,14 +61,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.message.observe(this) {
             loadErrorMessage(it)
         }
-
-viewModel.phraseResponse.observe(this) {
-
-}
-
-    }
-
-    private fun loadPhrase(phrase: Phrase) {
 
     }
 
